@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+ <declare-styleable name="RoundImageView">
+     <attr name="bordaoRadius" format="dimension"/> <!--我们想要的角度-->
+     <attr name="type">          <!--在这里面定义我们想要的类型-->
+         <enum name="circle" value="0"/>
+         <enum name="round" value="1"/>
+         </attr>
+     </declare-styleable>
+
+    
+</resources>
