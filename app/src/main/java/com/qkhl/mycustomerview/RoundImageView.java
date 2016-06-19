@@ -7,6 +7,7 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
@@ -16,6 +17,8 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.graphics.Shader.TileMode;
 public class RoundImageView extends ImageView {
@@ -37,7 +40,7 @@ public class RoundImageView extends ImageView {
     private Matrix mMatrix;
     private Paint mBitmapPaint;
     /**
-     * 圆角的半径
+     * 圆角的半径 
      */
     private int mRadius;
     private int mBorderRadius;
@@ -58,8 +61,8 @@ public class RoundImageView extends ImageView {
         TypedArray a = context.obtainStyledAttributes(attrs,
                 R.styleable.RoundImageView);
         *//**
-         * 获取圆角的角度
-         *//*
+         //获取圆角的角度
+        
         // 默认为10dp
         mBorderRadius = a.getDimensionPixelSize(
                 R.styleable.RoundImageView_bordaoRadius, (int) TypedValue
@@ -90,15 +93,48 @@ public class RoundImageView extends ImageView {
     }
 
 
+    /** view的生命周期方法
+     * **************************************
+     */
+
+
 
     /**
-     * 测量控件的宽高
+     *当View中所有的子控件均被映射成xml后触发
+     */
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
+        Log.e("flag","onFinishInflate");
+    }
+
+    /**
+     * 当view被附着到一个窗口时触发
+     */
+    @Override
+    protected void onAttachedToWindow() {
+        Log.e("flag","onAttachedToWindow");
+        super.onAttachedToWindow();
+    }
+    /**
+     * 当窗口中包含的可见的view发生变化时触发
+     * @param visibility
+     */
+    @Override
+    protected void onWindowVisibilityChanged(int visibility) {
+        Log.e("flag","onWindowVisibilityChanged");
+        super.onWindowVisibilityChanged(visibility);
+    }
+
+    /**
+     * 测量控件的宽高    生命周期
      * @param widthMeasureSpec
      * @param heightMeasureSpec
      */
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        Log.e("flag","onMeasure");
         /**
          * 如果我们想要的type是圆形，则我们需要让宽高一致，以较小的值为准、
          */
@@ -109,12 +145,43 @@ public class RoundImageView extends ImageView {
         }
     }
 
+    /**
+     * 当大小改变的时候调用这个方法，最少调用一次
+     * @param w
+     * @param h
+     * @param oldw
+     * @param oldh
+     */
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        Log.e("flag","onSizeChanged");
+        super.onSizeChanged(w, h, oldw, oldh);
+        if(type == TYPE_ROUND){
+            rectF = new RectF(0,0,w,h);
+
+        }
+    }
+
+    /**
+     * 当view分配所有子元素的大小和位置时触发
+     * @param changed
+     * @param left
+     * @param top
+     * @param right
+     * @param bottom
+     */
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.e("flag","onLayout");
+    }
 
 
     @Override
     protected void onDraw(Canvas canvas) {
-     //  super.onDraw(canvas);  一定要注意，把这个方法去点
-        Log.e("TAG", "onDraw");
+        //  super.onDraw(canvas);  一定要注意，把这个方法去点
+        //  Log.e("flag","onSizeChanged");
+        Log.e("flag", "onDraw");
         if (getDrawable() == null) {
             return;
         }
@@ -129,6 +196,95 @@ public class RoundImageView extends ImageView {
             // drawSomeThing(canvas);
         }
     }
+
+    /**
+     * 当view离开附着的窗口时触发
+     */
+    @Override
+    protected void onDetachedFromWindow() {
+        Log.e("flag","onDetachedFromWindow");
+        super.onDetachedFromWindow();
+    }
+
+
+    /**
+     * 当有按键按下时触发
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.e("flag","onKeyDown");
+        return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 当有按键弹起时触发
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        Log.e("flag","onKeyUp");
+        return super.onKeyUp(keyCode, event);
+    }
+
+    /**
+     * 轨迹球事件
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTrackballEvent(MotionEvent event) {
+        Log.e("flag","onTrackballEvent");
+        return super.onTrackballEvent(event);
+    }
+
+    /**
+     * 触屏事件
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        Log.e("flag","onTouchEvent");
+        return super.onTouchEvent(event);
+    }
+
+    /**
+     * 当View获取或失去焦点时触发
+     * @chu'faparam gainFocus
+     * @param direction
+     * @param previouslyFocusedRect
+     */
+    @Override
+    protected void onFocusChanged(boolean gainFocus, int direction, Rect previouslyFocusedRect) {
+        Log.e("flag","onFocusChanged");
+        super.onFocusChanged(gainFocus, direction, previouslyFocusedRect);
+    }
+
+    /**
+     * 当窗口包含的View获取或者失去焦点时触发
+     * @param hasWindowFocus
+     */
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        Log.e("flag","onWindowFocusChanged");
+        super.onWindowFocusChanged(hasWindowFocus);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     /**和
@@ -202,20 +358,6 @@ public class RoundImageView extends ImageView {
         mBitmapPaint.setShader(mBitmapShader);
     }
 
-    /**
-     * 当大小改变的时候调用这个方法，最少调用一次
-     * @param w
-     * @param h
-     * @param oldw
-     * @param oldh
-     */
-    @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        super.onSizeChanged(w, h, oldw, oldh);
-        if(type == TYPE_ROUND){
-            rectF = new RectF(0,0,w,h);
-        }
-    }
 
 
     /**
