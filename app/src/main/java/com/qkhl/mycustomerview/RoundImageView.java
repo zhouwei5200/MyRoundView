@@ -93,8 +93,8 @@ public class RoundImageView extends ImageView {
     }
 
 
-    /** view的生命周期方法
-     * **************************************
+    /** view的生命周期方法1
+     * ************************
      */
 
 
