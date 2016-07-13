@@ -25,7 +25,7 @@ public class RoundImageView extends ImageView {
 
 
     /**
-     * 圆角大小的默认值1234
+     * 圆角大小的默认值12345
      */
     private static final int BODER_RADIUS_DEFAULT = 10;
     /**
